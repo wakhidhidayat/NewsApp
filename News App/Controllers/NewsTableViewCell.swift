@@ -25,4 +25,20 @@ class NewsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    static let identifier = "NewsTableViewCell"
+    
+    static func nib() -> UINib {
+        return UINib(nibName: "NewsTableViewCell", bundle: nil)
+    }
+    
+    func configure(with model: News) {
+        self.title.text = model.title
+        self.date.text = model.publishedAt
+        self.source.text = model.source.name
+        
+        if let data = try? Data(contentsOf: URL(string: model.urlToImage)!) {
+            self.poster.image = UIImage(data: data)
+        }
+    }
+    
 }
