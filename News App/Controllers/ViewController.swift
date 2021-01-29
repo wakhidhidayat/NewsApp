@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import SafariServices
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ViewController: UIViewController {
 
     @IBOutlet weak var newsTable: UITableView!
     
@@ -30,16 +31,6 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         newsTable.register(NewsTableViewCell.nib(), forCellReuseIdentifier: NewsTableViewCell.identifier)
         newsTable.delegate = self
         newsTable.dataSource = self
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return newsDatas.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.identifier, for: indexPath) as! NewsTableViewCell
-        cell.configure(with: newsDatas[indexPath.row])
-        return cell
     }
     
     func fetchNews() {
@@ -74,5 +65,26 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
                 self.newsTable.reloadData()
             }
         }).resume()
+    }
+}
+
+extension ViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return newsDatas.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: NewsTableViewCell.identifier, for: indexPath) as! NewsTableViewCell
+        cell.configure(with: newsDatas[indexPath.row])
+        return cell
+    }
+}
+
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let vc = SFSafariViewController(url: URL(string: newsDatas[indexPath.row].url)!)
+        present(vc, animated: true)
     }
 }
