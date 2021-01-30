@@ -37,7 +37,7 @@ class NewsViewController: UIViewController {
         activityIndicator.startAnimating()
         newsTable.separatorStyle = .none
 
-        URLSession.shared.dataTask(with: URL(string: "https://newsapi.org/v2/top-headlines?country=id&apiKey=2169e45c9cec490b9aaed732d6090a7b")!, completionHandler: { data, response, error in
+        URLSession.shared.dataTask(with: URL(string: "https://newsapi.org/v2/top-headlines?country=id&apiKey=\(Secrets.apiKey)")!, completionHandler: { data, response, error in
             
             guard let data = data, error == nil else {
                 return

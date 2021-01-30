@@ -49,10 +49,10 @@ class DetailViewController: UIViewController {
             return
         }
         
-        var endpoint = "https://newsapi.org/v2/top-headlines?country=id&category=\(category)&apiKey=2169e45c9cec490b9aaed732d6090a7b"
+        var endpoint = "https://newsapi.org/v2/top-headlines?country=id&category=\(category)&apiKey=\(Secrets.apiKey)"
         
         if category == "us" || category == "id" {
-            endpoint = "https://newsapi.org/v2/top-headlines?country=\(category)&apiKey=2169e45c9cec490b9aaed732d6090a7b"
+            endpoint = "https://newsapi.org/v2/top-headlines?country=\(category)&apiKey=\(Secrets.apiKey)"
         }
         
         URLSession.shared.dataTask(with: URL(string: endpoint)!, completionHandler: { data, response, error in
